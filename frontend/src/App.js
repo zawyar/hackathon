@@ -11,6 +11,7 @@ import CartScreen from './screens/CartScreen';
 import LibraryScreen from './screens/LibraryScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import AddTokens from './screens/AddTokens';
 
 function App() {
     const [cartItems, setcartItems] = useState([]);
@@ -25,6 +26,9 @@ function App() {
     }
     function SetUserDetails(user) {
         setUser(user);
+        setUserName(user.name);
+        setPublicKey(user.PublicKey);
+        setBalance(user.balance);
     }
 
     function addToCart(items) {
@@ -58,7 +62,7 @@ function App() {
                                 <CartScreen
                                     items={cartItems}
                                     user={user}
-                                    userDataSetter={setUser}
+                                    userDataSetter={SetUserDetails}
                                 />
                             );
                         }}
@@ -70,7 +74,7 @@ function App() {
                             return (
                                 <LoginScreen
                                     login={SetLoginDetails}
-                                    userData={setUser}
+                                    userData={SetUserDetails}
                                 />
                             );
                         }}
@@ -82,7 +86,7 @@ function App() {
                             return (
                                 <RegistrationScreen
                                     login={SetLoginDetails}
-                                    userData={setUser}
+                                    userData={SetUserDetails}
                                 />
                             );
                         }}
@@ -105,6 +109,18 @@ function App() {
                         path='/profile'
                         component={() => {
                             return <ProfileScreen user={user} />;
+                        }}
+                        exact
+                    />
+                    <Route
+                        path='/addTokens'
+                        component={() => {
+                            return (
+                                <AddTokens
+                                    user={user}
+                                    userDataSetter={SetUserDetails}
+                                />
+                            );
                         }}
                         exact
                     />

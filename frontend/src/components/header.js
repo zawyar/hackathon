@@ -13,14 +13,13 @@ const Header = ({ userName, publicKey, balance }) => {
                         {userName}
                     </Nav.Link>
                 </LinkContainer>
-                <Navbar.Text>
-                    <i className='fas fa-bitcoin'></i> Balance:{' '}
-                    <a href='#login'>{balance}</a>
-                </Navbar.Text>
-                <Navbar.Text>
-                    <i className='fas fa-key'></i>Public Key:
-                    <a href='#login'>{publicKey}</a>
-                </Navbar.Text>
+
+                <LinkContainer to='/addTokens'>
+                    <Nav.Link>
+                        <i className='fas fa-bitcoin'></i> Balance:{balance}
+                    </Nav.Link>
+                </LinkContainer>
+
                 <LinkContainer to='/cart'>
                     <Nav.Link>
                         <i className='fas fa-shopping-cart'></i>Cart

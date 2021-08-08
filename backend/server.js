@@ -169,6 +169,26 @@ function checkoutTransaction(privateKey, senderPublicKey, products, amount) {
 
     return true;
 }
+function addTokens(receiverpublicKey, amount) {
+    let user = getUser(receiverpublicKey);
+    //console.log(senderPublicKey);
+    //console.log(user);
+    user.balance = user.balance + amount;
+
+    let transactionIds = user.transactions.map((item, index) => index);
+
+    let checkoutTransactionObject = TransactionObject;
+    checkoutTransactionObject.recieverKey = receiverpublicKey;
+    checkoutTransactionObject.amount = amount;
+    checkoutTransactionObject.senderKey = publicKey;
+    checkoutTransactionObject.transaction_ref = transactionIds;
+
+    user.transactions.push(checkoutTransactionObject);
+    console.log('user idx:  ' + getUserIndex(receiverpublicKey));
+    db.get('users').get(getUserIndex(receiverpublicKey)).set(user);
+
+    db.save();
+}
 function updateUserInDatabase(user) {}
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -214,6 +234,14 @@ app.post('/checkout', (req, res) => {
     const publicKey = req.body.publicKey;
     const amount = req.body.amount;
     checkoutTransaction(privateKey, publicKey, products, amount);
+    let user = getUser(publicKey);
+
+    res.send(user);
+});
+app.post('/addTokens', (req, res) => {
+    const publicKey = req.body.publicKey;
+    const amount = req.body.amount;
+    addTokens(publicKey, amount);
     let user = getUser(publicKey);
 
     res.send(user);
