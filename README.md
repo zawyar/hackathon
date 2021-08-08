@@ -1,6 +1,6 @@
 # Codeshop
 
-Codeshop is a stock-image platform where you can buy licenses to stock imagery which can then be used without worrying about copyright strikes.
+Codeshop is a video-game platform where you can buy licenses to video games which can then be used perpetually.
 The main features of code-shop are as follows:
 
 ## Public/Private cryptographic keys
@@ -19,9 +19,10 @@ Each and every transaction between the user and the marketplace is recorded and 
 
 Assuming the future addition of a smart-contract in the application's logic, the data is organized in a way that ensures immutability. Once the logic is implemented in a smart contract, there can be no changes in the user's previous records.
 
-## Support for mining in the future
+## Support for mined currency
 
 Each transaction is organized in a manner appropriate to represent a mining block. Given additional development time , it is possible to convert the mining process from a centralized structure to a decentralized system.
+The shop can also be integrated with bitcoin systems to allow gamers to use their mined currency for buying games.
 
 ## Available Scripts Back-end
 
