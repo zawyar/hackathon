@@ -9,17 +9,24 @@ import ProductScreen from './screens/ProductScreen';
 import LoginScreen from './screens/LoginScreen';
 import CartScreen from './screens/CartScreen';
 import LibraryScreen from './screens/LibraryScreen';
+import RegistrationScreen from './screens/RegistrationScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
     const [cartItems, setcartItems] = useState([]);
     const [userName, setUserName] = useState('');
     const [publicKey, setPublicKey] = useState('');
     const [balance, setBalance] = useState(0.0);
+    const [user, setUser] = useState({});
     function SetLoginDetails(userName, userPublicKey, userBalance) {
         setUserName(userName);
         setPublicKey(userPublicKey);
         setBalance(userBalance);
     }
+    function SetUserDetails(user) {
+        setUser(user);
+    }
+
     function addToCart(items) {
         setcartItems([...cartItems, items]);
     }
@@ -47,14 +54,37 @@ function App() {
                     <Route
                         path='/cart'
                         render={(props) => {
-                            return <CartScreen items={cartItems} />;
+                            return (
+                                <CartScreen
+                                    items={cartItems}
+                                    user={user}
+                                    userDataSetter={setUser}
+                                />
+                            );
                         }}
                         exact
                     />
                     <Route
                         path='/login'
                         component={() => {
-                            return <LoginScreen login={SetLoginDetails} />;
+                            return (
+                                <LoginScreen
+                                    login={SetLoginDetails}
+                                    userData={setUser}
+                                />
+                            );
+                        }}
+                        exact
+                    />
+                    <Route
+                        path='/register'
+                        component={() => {
+                            return (
+                                <RegistrationScreen
+                                    login={SetLoginDetails}
+                                    userData={setUser}
+                                />
+                            );
                         }}
                         exact
                     />
@@ -65,9 +95,16 @@ function App() {
                                 <LibraryScreen
                                     userName={userName}
                                     publicKey={publicKey}
-                                    balance={balance}
+                                    user={user}
                                 />
                             );
+                        }}
+                        exact
+                    />
+                    <Route
+                        path='/profile'
+                        component={() => {
+                            return <ProfileScreen user={user} />;
                         }}
                         exact
                     />

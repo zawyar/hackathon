@@ -9,11 +9,10 @@ import {
     Row,
 } from 'react-bootstrap';
 
-function LoginScreen({ login, userData }) {
-    const [key, setKey] = useState('');
-
-    async function SignIn(e) {
-        e.preventDefault();
+function RegistrationScreen({ login, userData }) {
+    const [username, setUsername] = useState('');
+    let printData = <></>;
+    async function SignUp(e) {
         e.preventDefault();
         let publicKey = '';
         let balance = '';
@@ -22,21 +21,21 @@ function LoginScreen({ login, userData }) {
             crossDomain: true,
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ publicKey: key }),
+            body: JSON.stringify({ username: username }),
         };
         const response = await fetch(
-            'http://localhost:5000/signin',
+            'http://localhost:5000/signup',
             requestOptions
         );
         const data = await response.json();
         console.log(data);
-        let username = data.name;
-        publicKey = data.publicKey.substring(0, 50);
-        balance = data.balance;
-        privateKey = data.privateKey;
+        publicKey = data.user.publicKey.substring(0, 50);
+        balance = data.user.balance;
+        privateKey = data.user.privateKey;
         login(username, publicKey, balance);
-        userData(data);
+        userData(data.user);
     }
+
     return (
         <>
             <Form>
@@ -45,9 +44,9 @@ function LoginScreen({ login, userData }) {
                     <Form.Control
                         size='lg'
                         type='text'
-                        placeholder='Enter public key'
+                        placeholder='Enter name'
                         onChange={(e) => {
-                            setKey(e.target.value);
+                            setUsername(e.target.value);
                         }}
                     />
                 </Form.Group>
@@ -55,7 +54,7 @@ function LoginScreen({ login, userData }) {
                     variant='primary'
                     type='submit'
                     onClick={(e) => {
-                        SignIn(e);
+                        SignUp(e);
                     }}
                 >
                     Submit
@@ -65,4 +64,4 @@ function LoginScreen({ login, userData }) {
     );
 }
 
-export default LoginScreen;
+export default RegistrationScreen;

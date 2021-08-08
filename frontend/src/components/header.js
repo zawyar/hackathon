@@ -7,10 +7,12 @@ const Header = ({ userName, publicKey, balance }) => {
     if (publicKey !== '') {
         options = (
             <>
-                <Navbar.Text>
-                    <i className='fas fa-user'></i>
-                    <a href='#login'>{userName}</a>
-                </Navbar.Text>
+                <LinkContainer to='/profile'>
+                    <Nav.Link>
+                        <i className='fas fa-user'></i>
+                        {userName}
+                    </Nav.Link>
+                </LinkContainer>
                 <Navbar.Text>
                     <i className='fas fa-bitcoin'></i> Balance:{' '}
                     <a href='#login'>{balance}</a>
@@ -33,11 +35,18 @@ const Header = ({ userName, publicKey, balance }) => {
         );
     } else {
         options = (
-            <LinkContainer to='/login'>
-                <Nav.Link>
-                    <i className='fas fa-user'></i>Sign In
-                </Nav.Link>
-            </LinkContainer>
+            <>
+                <LinkContainer to='/login'>
+                    <Nav.Link>
+                        <i className='fas fa-user'></i>Sign In
+                    </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to='/register'>
+                    <Nav.Link>
+                        <i className='fas fa-user'></i>Sign Up
+                    </Nav.Link>
+                </LinkContainer>
+            </>
         );
     }
     return (

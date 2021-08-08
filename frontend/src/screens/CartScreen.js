@@ -1,8 +1,35 @@
-import React from 'react';
-import { Button, Col, ListGroup, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Col, Form, ListGroup, Row } from 'react-bootstrap';
 
-function CartScreen({ items }) {
-    async function Checkout() {}
+function CartScreen({ items, userDataSetter, user }) {
+    const [key, setKey] = useState('');
+    async function Checkout(e) {
+        e.preventDefault();
+        let amount = 0;
+        let productsList = items.map((item) => {
+            amount = amount + item.price;
+            return item._id;
+        });
+        const requestOptions = {
+            crossDomain: true,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                privateKey: key,
+                publicKey: user.publicKey,
+                products: productsList,
+                amount: amount,
+            }),
+        };
+        const response = await fetch(
+            'http://localhost:5000/checkout',
+            requestOptions
+        );
+        const data = await response.json();
+        console.log(data);
+
+        userDataSetter(data);
+    }
     return (
         <Row>
             <Col md={3}></Col>
@@ -23,10 +50,28 @@ function CartScreen({ items }) {
                             );
                         })}
                     </ListGroup.Item>
-
-                    <Button className='btn-block' type='button'>
-                        Checkout
-                    </Button>
+                    <Form>
+                        <Form.Group className='mb-3' controlId='formBasicKey'>
+                            <Form.Label>Private Key</Form.Label>
+                            <Form.Control
+                                size='lg'
+                                type='text'
+                                placeholder='Enter private key'
+                                onChange={(e) => {
+                                    setKey(e.target.value);
+                                }}
+                            />
+                        </Form.Group>
+                        <Button
+                            variant='primary'
+                            type='submit'
+                            onClick={(e) => {
+                                Checkout(e);
+                            }}
+                        >
+                            Checkout
+                        </Button>
+                    </Form>
                 </ListGroup>
             </Col>
             <Col md={3}></Col>
