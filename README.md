@@ -1,3 +1,18 @@
+# dependencies
+The project has a number of dependencies in order to ensure proper functioning. First of which, is node js which can be downloaded from the link below:
+
+https://nodejs.org/en/
+
+After that, you need to install the dev dependencies for which you need to
+Navigate to the codeshop root directory, open a powershell terminal in codeshop folder
+Then type 
+npm install
+
+Then after the installation finishes, navigate to the frontend folder using
+cd frontend
+And then lastly run
+npm install
+Once again
 # Codeshop
 
 Codeshop is a video-game platform where you can buy licenses to video games which can then be used perpetually.
