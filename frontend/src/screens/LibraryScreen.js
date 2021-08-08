@@ -7,6 +7,7 @@ const LibraryScreen = ({ userName, publicKey, user }) => {
     if (!user.library) {
         user.library = [];
     }
+    
     let output = products.map((product, index) => {
         if (user.library.find((item) => product._id == item)) {
             console.log('match');

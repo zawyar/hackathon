@@ -145,6 +145,9 @@ function getUserIndex(publicKey) {
 function checkoutTransaction(privateKey, senderPublicKey, products, amount) {
     //setup initial transaction state
     let user = getUser(senderPublicKey);
+    if (user.privateKey !== privateKey) {
+        return false;
+    }
     //console.log(senderPublicKey);
     //console.log(user);
     if (amount > user.balance) {
@@ -159,8 +162,9 @@ function checkoutTransaction(privateKey, senderPublicKey, products, amount) {
     checkoutTransactionObject.amount = -amount;
     checkoutTransactionObject.senderKey = senderPublicKey;
     checkoutTransactionObject.transaction_ref = transactionIds;
-
-    user.library.push(products);
+    products.forEach((item) => {
+        user.library.push(item);
+    });
     user.transactions.push(checkoutTransactionObject);
     console.log('user idx:  ' + getUserIndex(senderPublicKey));
     db.get('users').get(getUserIndex(senderPublicKey)).set(user);
